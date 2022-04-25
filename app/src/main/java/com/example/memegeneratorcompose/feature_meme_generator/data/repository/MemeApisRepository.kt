@@ -29,7 +29,7 @@ class HomeViewModel() : ViewModel() {
 
 
     fun refreshMemes() {
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch {
             try {
                 val characters = api.getMemes()
                 _state.value = characters
@@ -40,7 +40,7 @@ class HomeViewModel() : ViewModel() {
     }
 
     fun delete(id: String) {
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch {
             try {
                 api.deleteMeme(id)
                 refreshMemes()
@@ -51,7 +51,7 @@ class HomeViewModel() : ViewModel() {
     }
 
     fun update(id: String) {
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch {
             try {
                 api.updateMeme(id, myMeme)
                 refreshMemes()
@@ -63,7 +63,7 @@ class HomeViewModel() : ViewModel() {
     }
 
     fun post() {
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch {
             try {
                 api.postMeme(myMeme)
                 refreshMemes()

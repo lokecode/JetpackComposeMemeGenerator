@@ -1,4 +1,4 @@
-package com.example.httpmethodsretrofitexample.feature_meme_generator.presentation
+package com.example.memegeneratorcompose.feature_meme_generator.data.local
 
 import kotlin.random.Random
 import com.example.httpmethodsretrofitexample.feature_meme_generator.data.local.Constants.Companion.randomImg

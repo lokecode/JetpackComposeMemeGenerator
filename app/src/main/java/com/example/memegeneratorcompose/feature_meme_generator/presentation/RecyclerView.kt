@@ -18,6 +18,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberImagePainter
 import com.example.httpmethodsretrofitexample.feature_meme_generator.data.repository.HomeViewModel
 import com.example.httpmethodsretrofitexample.feature_meme_generator.domain.model.MemeModel
+import com.example.memegeneratorcompose.feature_meme_generator.presentation.CharacterImageCard
 
 
 @Composable
@@ -45,46 +46,4 @@ fun HomeScreen() {
 
     }
 
-}
-
-@Composable
-fun CharacterImageCard(character: MemeModel) {
-    val imagerPainter = rememberImagePainter(data = character.image)
-
-    Card(
-        shape = MaterialTheme.shapes.medium,
-    ) {
-        Column {
-            Image(
-                painter = imagerPainter,
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(400.dp),
-                contentScale = ContentScale.Crop
-            )
-            Text(
-                text = "Real name: ${character.text}",
-                Modifier.padding(7.dp)
-            )
-        }
-        Row {
-            Button(
-                onClick = { },
-            ) {
-                Text(text = "MEEE!!")
-            }
-            Button(
-                onClick = { },
-            ) {
-                Text(text = "MEEE!!")
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-fun myPreview(){
-    CharacterImageCard(MemeModel("","","",))
 }
