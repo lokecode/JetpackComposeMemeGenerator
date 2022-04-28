@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberImagePainter
 import com.example.httpmethodsretrofitexample.feature_meme_generator.data.local.Constants
+import com.example.httpmethodsretrofitexample.feature_meme_generator.data.repository.RecyclerViewRepository
 import com.example.httpmethodsretrofitexample.feature_meme_generator.domain.model.MemeModel
 import com.example.memegeneratorcompose.feature_meme_generator.data.viewmodel.HomeViewModel
 import com.example.memegeneratorcompose.feature_meme_generator.presentation.CharacterImageCard
@@ -23,11 +24,11 @@ import com.example.memegeneratorcompose.feature_meme_generator.presentation.Char
 @Composable
 fun HomeScreen() {
     val HomeViewModel = viewModel(modelClass = HomeViewModel::class.java)
-    val state by HomeViewModel.state.collectAsState()
+    val state by HomeViewModel.statee.collectAsState()
 
 
     LazyColumn {
-        HomeViewModel.refreshMemes()
+        RecyclerViewRepository().refreshMemes()
         if (state.isEmpty()) {
             item {
                 CircularProgressIndicator(

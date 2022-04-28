@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberImagePainter
 import com.example.httpmethodsretrofitexample.feature_meme_generator.data.repository.RecyclerViewRepository
@@ -41,15 +42,20 @@ fun CharacterImageCard(character: MemeModel) {
                     .clip(shape = RoundedCornerShape(25.dp)),
                 contentScale = ContentScale.Crop
             )
-            Text(
-                text = character.text,
-                Modifier
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
                     .fillMaxWidth()
                     .background(color = Color.Black)
-                    .padding(7.dp),
-                color = Color.White
-
-            )
+            ) {
+                Text(
+                    text = character.text,
+                    fontSize = 23.sp,
+                    color = Color.White,
+                    modifier = Modifier
+                        .padding(7.dp),
+                )
+            }
         }
         Row {
             OutlinedButton(
@@ -61,7 +67,8 @@ fun CharacterImageCard(character: MemeModel) {
                 ),
                 modifier = Modifier
                     .clip(RoundedCornerShape(topStart = 25.dp))
-                    .size(width = 42.dp,
+                    .size(
+                        width = 42.dp,
                         height = 42.dp
                     ),
                 contentPadding = PaddingValues(0.dp)
@@ -84,7 +91,8 @@ fun CharacterImageCard(character: MemeModel) {
                 ),
                 modifier = Modifier
                     .clip(RoundedCornerShape(bottomEnd = 25.dp))
-                    .size(width = 42.dp,
+                    .size(
+                        width = 42.dp,
                         height = 42.dp
                     ),
                 contentPadding = PaddingValues(0.dp)
@@ -101,3 +109,4 @@ fun CharacterImageCard(character: MemeModel) {
         }
     }
 }
+

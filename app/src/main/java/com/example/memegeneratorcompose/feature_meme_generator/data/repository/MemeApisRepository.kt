@@ -3,6 +3,8 @@ package com.example.httpmethodsretrofitexample.feature_meme_generator.data.repos
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.httpmethodsretrofitexample.adapter.HomeScreen
 import com.example.httpmethodsretrofitexample.feature_meme_generator.data.local.Constants.Companion.arrayOfMemeImg
 import com.example.httpmethodsretrofitexample.feature_meme_generator.data.local.Constants.Companion.arrayOfMemeText
 import com.example.httpmethodsretrofitexample.feature_meme_generator.data.local.Constants.Companion.randomImg
@@ -13,6 +15,8 @@ import com.example.httpmethodsretrofitexample.feature_meme_generator.di.apiInsta
 import com.example.httpmethodsretrofitexample.feature_meme_generator.domain.model.MemeModel
 import com.example.httpmethodsretrofitexample.feature_meme_generator.domain.model.PostMemeModel
 import com.example.memegeneratorcompose.feature_meme_generator.data.viewmodel.HomeViewModel
+import com.example.memegeneratorcompose.feature_meme_generator.data.viewmodel.test9000.Companion._state
+import com.example.memegeneratorcompose.feature_meme_generator.data.viewmodel.test9000.Companion.api
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,19 +28,31 @@ import kotlin.random.Random
 
 class RecyclerViewRepository {
     val myMeme = PostMemeModel(arrayOfMemeImg[randomImg], arrayOfMemeText[randomText])
+
     fun generateMeme() {
         randomImg = Random.nextInt(8)
         randomText = Random.nextInt(8)
+    }
+
+    fun refreshMemes() {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val characters = api.getMemes()
+                _state.value = characters
+            } catch (e: IOException) {
+                Log.d("MainActivity", "${e}")
+            }
+        }
     }
 
     fun delete(id: String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 apiInstance.ApiInstance.deleteMeme(id)
-                HomeViewModel().refreshMemes()
+                refreshMemes()
             } catch (e: IOException) {
                 Log.d("MainActivity", "${e}")
-                HomeViewModel().refreshMemes()
+                refreshMemes()
             }
         }
     }
@@ -45,10 +61,10 @@ class RecyclerViewRepository {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 apiInstance.ApiInstance.updateMeme(id, myMeme)
-                HomeViewModel().refreshMemes()
+                refreshMemes()
             } catch (e: IOException) {
                 Log.d("MainActivity", "${e}")
-                HomeViewModel().refreshMemes()
+                refreshMemes()
             }
         }
     }
@@ -57,10 +73,10 @@ class RecyclerViewRepository {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 apiInstance.ApiInstance.postMeme(myMeme)
-                HomeViewModel().refreshMemes()
+                refreshMemes()
             } catch (e: IOException) {
                 Log.d("MainActivity", "${e}")
-                HomeViewModel().refreshMemes()
+                refreshMemes()
             }
 
         }

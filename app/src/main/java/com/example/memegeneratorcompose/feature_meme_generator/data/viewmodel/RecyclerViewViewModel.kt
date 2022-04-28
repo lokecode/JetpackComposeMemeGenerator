@@ -11,6 +11,8 @@ import com.example.httpmethodsretrofitexample.feature_meme_generator.data.local.
 import com.example.httpmethodsretrofitexample.feature_meme_generator.di.apiInstance
 import com.example.httpmethodsretrofitexample.feature_meme_generator.domain.model.MemeModel
 import com.example.httpmethodsretrofitexample.feature_meme_generator.domain.model.PostMemeModel
+import com.example.memegeneratorcompose.feature_meme_generator.data.viewmodel.test9000.Companion._state
+import com.example.memegeneratorcompose.feature_meme_generator.data.viewmodel.test9000.Companion.state
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,24 +21,19 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 import kotlin.random.Random
 
-class HomeViewModel() : ViewModel() {
+class test9000(){
+    companion object {
+        val api = apiInstance.ApiInstance
+        val myMeme = PostMemeModel(arrayOfMemeImg[randomImg], arrayOfMemeText[randomText])
 
-    val api = apiInstance.ApiInstance
-    val myMeme = PostMemeModel(arrayOfMemeImg[randomImg], arrayOfMemeText[randomText])
-
-    private val _state = MutableStateFlow(emptyList<MemeModel>())
-    val state: StateFlow<List<MemeModel>>
-        get() = _state
-
-
-    fun refreshMemes() {
-        viewModelScope.launch {
-            try {
-                val characters = api.getMemes()
-                _state.value = characters
-            } catch (e: IOException) {
-                Log.d("MainActivity", "${e}")
-            }
-        }
+        val _state = MutableStateFlow(emptyList<MemeModel>())
+        val state: StateFlow<List<MemeModel>>
+            get() = _state
     }
+}
+
+class HomeViewModel() : ViewModel() {
+    val _statee = _state
+    val statee = state
+
 }
