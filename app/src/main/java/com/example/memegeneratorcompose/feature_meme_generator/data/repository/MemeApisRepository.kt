@@ -6,9 +6,10 @@ import com.example.httpmethodsretrofitexample.feature_meme_generator.data.local.
 import com.example.httpmethodsretrofitexample.feature_meme_generator.data.remote.MemeApis
 import com.example.httpmethodsretrofitexample.feature_meme_generator.domain.model.MemeModel
 import com.example.httpmethodsretrofitexample.feature_meme_generator.domain.model.PostMemeModel
-import com.example.memegeneratorcompose.feature_meme_generator.data.repository.GenerateMeme.index.randomImg
-import com.example.memegeneratorcompose.feature_meme_generator.data.repository.GenerateMeme.index.randomText
+import com.example.memegeneratorcompose.feature_meme_generator.data.repository.GenerateMeme.Index.randomImg
+import com.example.memegeneratorcompose.feature_meme_generator.data.repository.GenerateMeme.Index.randomText
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.io.IOException
 
@@ -19,11 +20,11 @@ class MemeApisRepository(
     private val api = Api
 
 
-    fun refreshMemes(state: MutableStateFlow<List<MemeModel>>) {
+    fun refreshMemes(state: MutableSharedFlow<List<MemeModel>>) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val characters = api.getMemes()
-                state.value = characters
+                state.emit(characters)
             } catch (e: IOException) {
                 Log.d("MainActivity", "${e}")
             }

@@ -1,5 +1,6 @@
 package com.example.memegeneratorcompose.feature_meme_generator.presentation
 
+import android.util.DisplayMetrics
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -11,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -26,6 +28,7 @@ import com.example.memegeneratorcompose.feature_meme_generator.data.viewmodel.Ho
 fun CharacterImageCard(character: MemeModel) {
     val HomeViewModel = viewModel(modelClass = HomeViewModel::class.java)
     val imagerPainter = rememberImagePainter(data = character.image)
+    val width = LocalConfiguration.current.screenWidthDp
 
     Card{
         Column {
@@ -34,7 +37,7 @@ fun CharacterImageCard(character: MemeModel) {
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(400.dp)
+                    .height(width.dp)
                     .background(color = Color.Black)
                     .clip(shape = RoundedCornerShape(25.dp)),
                 contentScale = ContentScale.Crop

@@ -20,8 +20,8 @@ import com.example.httpmethodsretrofitexample.feature_meme_generator.data.local.
 import com.example.httpmethodsretrofitexample.feature_meme_generator.di.ApiCaller
 import com.example.memegeneratorcompose.R
 import com.example.memegeneratorcompose.feature_meme_generator.data.repository.GenerateMeme
-import com.example.memegeneratorcompose.feature_meme_generator.data.repository.GenerateMeme.index.randomImg
-import com.example.memegeneratorcompose.feature_meme_generator.data.repository.GenerateMeme.index.randomText
+import com.example.memegeneratorcompose.feature_meme_generator.data.repository.GenerateMeme.Index.randomImg
+import com.example.memegeneratorcompose.feature_meme_generator.data.repository.GenerateMeme.Index.randomText
 
 @Composable
 fun MemeGeneratorLayout() {

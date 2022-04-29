@@ -11,12 +11,13 @@ import com.example.httpmethodsretrofitexample.feature_meme_generator.di.ApiCalle
 import com.example.httpmethodsretrofitexample.feature_meme_generator.domain.model.MemeModel
 import com.example.memegeneratorcompose.feature_meme_generator.data.viewmodel.HomeViewModel
 import com.example.memegeneratorcompose.feature_meme_generator.presentation.CharacterImageCard
+import kotlinx.coroutines.flow.collectLatest
 
 
 @Composable
 fun HomeScreen() {
     val HomeViewModel = viewModel(modelClass = HomeViewModel::class.java)
-    val state by HomeViewModel.state.collectAsState()
+    val state = HomeViewModel.state.collectAsState(initial = emptyList()).value
 
     LazyColumn {
         ApiCaller().refreshMemes(HomeViewModel._state)
