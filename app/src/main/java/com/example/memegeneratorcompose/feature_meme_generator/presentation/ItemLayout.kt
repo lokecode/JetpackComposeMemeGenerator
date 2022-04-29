@@ -1,7 +1,5 @@
 package com.example.memegeneratorcompose.feature_meme_generator.presentation
 
-import android.util.Log
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -9,25 +7,24 @@ import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberImagePainter
-import com.example.httpmethodsretrofitexample.feature_meme_generator.data.repository.RecyclerViewRepository
+import com.example.httpmethodsretrofitexample.feature_meme_generator.di.ApiCaller
 import com.example.httpmethodsretrofitexample.feature_meme_generator.domain.model.MemeModel
 import com.example.memegeneratorcompose.R
+import com.example.memegeneratorcompose.feature_meme_generator.data.viewmodel.HomeViewModel
 
 
 @Composable
 fun CharacterImageCard(character: MemeModel) {
+    val HomeViewModel = viewModel(modelClass = HomeViewModel::class.java)
     val imagerPainter = rememberImagePainter(data = character.image)
 
     Card{
@@ -50,6 +47,7 @@ fun CharacterImageCard(character: MemeModel) {
             ) {
                 Text(
                     text = character.text,
+
                     fontSize = 23.sp,
                     color = Color.White,
                     modifier = Modifier
@@ -59,7 +57,10 @@ fun CharacterImageCard(character: MemeModel) {
         }
         Row {
             OutlinedButton(
-                onClick = { RecyclerViewRepository().update(character.id) },
+                onClick = {
+                    ApiCaller().update(character.id)
+                    ApiCaller().refreshMemes(HomeViewModel._state)
+                },
 
                 shape = CutCornerShape(0.dp),
                 colors = ButtonDefaults.buttonColors(
@@ -83,7 +84,10 @@ fun CharacterImageCard(character: MemeModel) {
             }
 
             OutlinedButton(
-                onClick = { RecyclerViewRepository().delete(character.id) },
+                onClick = {
+                    ApiCaller().delete(character.id)
+                    ApiCaller().refreshMemes(HomeViewModel._state)
+                },
 
                 shape = CutCornerShape(0.dp),
                 colors = ButtonDefaults.buttonColors(

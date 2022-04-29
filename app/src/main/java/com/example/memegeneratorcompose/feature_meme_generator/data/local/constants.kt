@@ -3,8 +3,6 @@ package com.example.httpmethodsretrofitexample.feature_meme_generator.data.local
 class Constants {
     companion object {
 
-        var randomImg = 0
-        var randomText = 0
         val arrayOfMemeImg = arrayListOf<String>(
             "https://i.imgflip.com/2/2l2ri4.jpg",
             "https://i.blogs.es/d86db0/meme-fry-1/450_1000.jpg",

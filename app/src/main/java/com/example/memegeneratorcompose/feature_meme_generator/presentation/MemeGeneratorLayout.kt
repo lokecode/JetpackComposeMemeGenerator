@@ -17,12 +17,11 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.httpmethodsretrofitexample.feature_meme_generator.data.local.Constants.Companion.arrayOfMemeImg
 import com.example.httpmethodsretrofitexample.feature_meme_generator.data.local.Constants.Companion.arrayOfMemeText
-import com.example.httpmethodsretrofitexample.feature_meme_generator.data.local.Constants.Companion.randomImg
-import com.example.httpmethodsretrofitexample.feature_meme_generator.data.local.Constants.Companion.randomText
-import com.example.httpmethodsretrofitexample.feature_meme_generator.data.repository.RecyclerViewRepository
-import com.example.httpmethodsretrofitexample.feature_meme_generator.domain.model.PostMemeModel
+import com.example.httpmethodsretrofitexample.feature_meme_generator.di.ApiCaller
 import com.example.memegeneratorcompose.R
-import kotlin.random.Random
+import com.example.memegeneratorcompose.feature_meme_generator.data.repository.GenerateMeme
+import com.example.memegeneratorcompose.feature_meme_generator.data.repository.GenerateMeme.index.randomImg
+import com.example.memegeneratorcompose.feature_meme_generator.data.repository.GenerateMeme.index.randomText
 
 @Composable
 fun MemeGeneratorLayout() {
@@ -32,6 +31,9 @@ fun MemeGeneratorLayout() {
     val memeText = remember {
         mutableStateOf(arrayOfMemeText[5])
     }
+
+
+
     Column(
         verticalArrangement = Arrangement.Bottom
     ) {
@@ -54,7 +56,7 @@ fun MemeGeneratorLayout() {
                     ),
                     contentPadding = PaddingValues(0.dp),
                     onClick = {
-                        RecyclerViewRepository().generateMeme()
+                        GenerateMeme().generateMeme()
                         memeImg.value = arrayOfMemeImg[randomImg];
                         memeText.value = arrayOfMemeText[randomText];
                     }
@@ -103,7 +105,7 @@ fun MemeGeneratorLayout() {
                     modifier = Modifier
                         .width(50.dp)
                         .fillMaxHeight(),
-                    onClick = { RecyclerViewRepository().post() }
+                    onClick = { ApiCaller().post() }
                 ) {
                     Icon(
                         contentDescription = null,
@@ -118,5 +120,33 @@ fun MemeGeneratorLayout() {
                 }
             }
         }
+    }
+}
+
+@Composable
+fun button(onPress: Unit, icon: Int, ) {
+    OutlinedButton(
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = Color(0x0)
+        ),
+        border = BorderStroke(
+            width = 0.dp,
+            color = Color.Transparent
+        ),
+        contentPadding = PaddingValues(0.dp),
+        onClick = {
+            onPress
+        }
+    ) {
+        Icon(
+            contentDescription = null,
+            tint = Color.Cyan,
+            painter = painterResource(
+                id = icon,
+            ),
+            modifier = Modifier
+                .width(47.dp)
+                .fillMaxHeight()
+        )
     }
 }
